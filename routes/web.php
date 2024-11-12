@@ -20,7 +20,7 @@ Route::get('/pengajuan', [PengajuanController::class, 'show'])->name('pengajuan.
 Route::get('/pengajuan/create', [PengajuanController::class, 'create'])->name('pengajuan.create');
 Route::post('/pengajuan/store', [PengajuanController::class, 'store'])->name('pengajuan.store');
 
-
+Route::get('/anggaran', [YourController::class, 'yourMethod'])->name('anggaran');
 
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

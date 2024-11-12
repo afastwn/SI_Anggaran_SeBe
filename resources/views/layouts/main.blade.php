@@ -35,6 +35,10 @@
                     <i class="fas fa-file-alt mr-2"></i>
                     <a href="{{ route('pengajuan.show') }}">Pengajuan</a>
                 </li>
+                <li class="mb-4 flex items-center {{ request()->routeIs('anggaran') ? 'bg-green-200 text-green-600' : '' }}">
+                    <i class="fas fa-file-alt mr-2"></i>
+                    <a href="{{ route('anggaran') }}">Anggaran</a>
+                </li>
                 <li class="mb-4 flex items-center {{ request()->routeIs('realisasi') ? 'bg-green-200 text-green-600' : '' }}">
                     <i class="fas fa-check-circle mr-2"></i>
                     <a href="#">Realisasi</a>
