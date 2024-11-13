@@ -2,6 +2,7 @@
 use App\Anggaran;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\pengajuanController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,3 +30,6 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.custom');
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.custom');
+
+Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Hanya bisa diakses oleh admin
+Route::post('/manage/user/store', [RegisterController::class, 'register'])->name('manage.user.store'); // Hanya bisa diakses oleh admin

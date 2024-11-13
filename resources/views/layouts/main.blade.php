@@ -31,6 +31,12 @@
                     <a href="#">Manage Data</a>
                 </li>
                 @endif
+                @if (request()->routeIs('home.admin')) <!-- Pengecekan rute untuk admin -->
+                    <li class="mb-4 flex items-center {{ request()->routeIs('manage.user') ? 'bg-green-200 text-green-600' : '' }}">
+                        <i class="fas fa-users mr-2"></i>
+                        <a href="{{ route('manage.user') }}">Kelola User</a>
+                    </li>
+                @endif
                 <li class="mb-4 flex items-center {{ request()->routeIs('pengajuan.show') ? 'bg-green-200 text-green-600' : '' }}">
                     <i class="fas fa-file-alt mr-2"></i>
                     <a href="{{ route('pengajuan.show') }}">Pengajuan</a>

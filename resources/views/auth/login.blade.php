@@ -35,7 +35,7 @@
                     <form class="w-full" method="POST" action="{{ route('login.custom') }}">
                         @csrf
                         <div class="mb-4">
-                            <input class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" name="username" placeholder="Username" type="text" required/>
+                            <input class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" name="email" placeholder="Email" type="text" required/>
                         </div>
                         <div class="mb-4">
                             <input class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" name="password" placeholder="Password" type="password" required/>
