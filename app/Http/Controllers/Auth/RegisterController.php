@@ -14,13 +14,6 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    // public function __construct()
-    // {
-    //     $this->middleware('admin'); // Hanya bisa diakses oleh admin
-    // }
-
     // Menampilkan form pendaftaran
     public function showRegistrationForm()
     {
@@ -30,10 +23,10 @@ class RegisterController extends Controller
     // Menyimpan pengguna baru
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
+        return Userr::create([
+            'nama_user' => $data['nama_user'],
             'role' => $data['role'], // Simpan role
+            'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
     }
@@ -42,9 +35,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'role' => ['required', 'in:' . implode(',', User::roles())], // Validasi role harus sesuai dengan enum
+            'nama_user' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'in:' . implode(',', Userr::roles())], // Validasi role harus sesuai dengan enum
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:userr'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
@@ -55,6 +48,6 @@ class RegisterController extends Controller
         $this->validator($request->all())->validate();
         $this->create($request->all());
 
-        return redirect()->route('manage.user')->with('success', 'Pengguna berhasil ditambahkan.');
+        return redirect()->route('login')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 }

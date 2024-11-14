@@ -11,14 +11,17 @@ use Illuminate\Http\Request; // Import Request
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
-    protected $redirectTo = RouteServiceProvider::HOME;
 
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
     }
+
+    public function showLogin()
+    {
+        return view('auth.login'); // Pastikan view ini mengarah ke file login yang benar
+    }
+
 
     public function login(Request $request)
     {
@@ -31,16 +34,27 @@ class LoginController extends Controller
         // Cek kredensial
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Jika login berhasil, periksa peran pengguna
-            $user = Auth::userr();
+            $user = Auth::user();
+            dd($user);
 
             if ($user->role == 'admin') {
-                return redirect()->route('home.admin'); // Halaman untuk admin
+                return redirect()->intended('home.admin'); // Halaman untuk admin
             } elseif ($user->role == 'kepala_divisi') {
-                return redirect()->route('home.kadiv'); // Halaman untuk kepala divisi
+                return redirect()->intended('home.kadiv'); // Halaman untuk kepala divisi
             }
         }
 
         // Jika login gagal
         return redirect()->back()->withErrors(['email' => 'Kredensial tidak valid.'])->withInput();
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate(); // Menghapus semua data sesi
+        $request->session()->regenerateToken(); // Mengamankan token sesi baru
+
+        return redirect('/login'); // Arahkan kembali ke halaman login setelah logout
+    }
+
 }

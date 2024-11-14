@@ -47,7 +47,7 @@
                     </form>
                     <p class="mt-4 text-sm">
                         Belum memiliki akun?
-                        <a class="text-blue-500" href="#">Sign Up</a>
+                        <a class="text-blue-500" href="{{ route('manage.user') }}">Sign Up</a> <!-- Ubah rute sesuai dengan rute registrasi -->
                     </p>
                 </div>
             </div>

@@ -8,8 +8,12 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.custom');
+
+
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
@@ -25,8 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pengajuan/create', [PengajuanController::class, 'create'])->name('pengajuan.create');
     Route::post('/pengajuan/store', [PengajuanController::class, 'store'])->name('pengajuan.store');
 
-    Route::get('/anggaran', [YourController::class, 'yourMethod'])->name('anggaran');
 });
 
-Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Hanya bisa diakses oleh admin
-Route::post('/manage/user/store', [RegisterController::class, 'register'])->name('manage.user.store'); // Hanya bisa diakses oleh admin
+Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Semua pengguna bisa mengakses
+Route::post('/manage/user/store', [RegisterController::class, 'register'])->name('manage.user.store'); // Semua pengguna bisa mengakses
