@@ -31,17 +31,21 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+        $user = Userr::where('email', $request->email)->first();
 
         // Cek kredensial
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        // if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        //     // Jika login berhasil, periksa peran pengguna
+        //     $user = Auth::userr();
+        //     dd($user);
+        if ($user && $user->password == $request->password) {
             // Jika login berhasil, periksa peran pengguna
-            $user = Auth::userr();
-            dd($user);
+            Auth::login($user);
 
             if ($user->role == Userr::ROLE_ADMIN) {
-                return redirect()->intended('home.admin'); // Halaman untuk admin
+                return redirect()->intended('home/admin'); // Halaman untuk admin
             } elseif ($user->role == Userr::ROLE_KADIV) {
-                return redirect()->intended('home.kadiv'); // Halaman untuk kepala divisi
+                return redirect()->intended('home/kadiv'); // Halaman untuk kepala divisi
             }
 
         }

@@ -27,7 +27,8 @@ class RegisterController extends Controller
             'nama_user' => $data['nama_user'],
             'role' => $data['role'], // Simpan role
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'password' => $data['password'],
+            // 'password' => Hash::make($data['password']),
         ]);
     }
 

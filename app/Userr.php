@@ -27,10 +27,10 @@ class Userr extends Authenticatable
     }
 
     // Jika Anda ingin menggunakan hashing untuk password, Anda dapat menambahkan mutator
-    public function setPasswordAttribute($password)
-    {
-        $this->attributes['password'] = bcrypt($password);
-    }
+    // public function setPasswordAttribute($password)
+    // {
+    //     $this->attributes['password'] = bcrypt($password);
+    // }
 
     // Jika Anda ingin menambahkan aksesors untuk nama_user
     public function getNameAttribute()
