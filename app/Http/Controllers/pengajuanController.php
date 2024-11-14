@@ -93,35 +93,35 @@ public function show()
     }
 
     // Menyimpan data anggaran
-    $anggaran = new Anggaran();
-    $anggaran->id_pengajuan = $pengajuan->id_pengajuan;
-    $anggaran->jumlah = $request->jumlah;
-    $anggaran->tanggal = $request->tanggal;
-    $anggaran->status = 'pending';
-    $anggaran->nama_anggaran = $request->nama_anggaran;
-    $anggaran->id_divisi = $request->id_divisi;
-    $anggaran->id_rekening = $request->id_rekening;
-    $anggaran->id_tahun = $tahun->id_tahun;
+    // $anggaran = new Anggaran();
+    // $anggaran->id_pengajuan = $pengajuan->id_pengajuan;
+    // $anggaran->jumlah = $request->jumlah;
+    // $anggaran->tanggal = $request->tanggal;
+    // $anggaran->status = 'pending';
+    // $anggaran->nama_anggaran = $request->nama_anggaran;
+    // $anggaran->id_divisi = $request->id_divisi;
+    // $anggaran->id_rekening = $request->id_rekening;
+    // $anggaran->id_tahun = $tahun->id_tahun;
 
-    // Simpan data anggaran
-    $anggaran->save();
+    // // Simpan data anggaran
+    // $anggaran->save();
 
-    // Update total anggaran berdasarkan tipe transaksi
-    if ($request->tipe_transaksi === 'Penerimaan') {
-        // Tambah jumlah ke total anggaran
-        $totalAnggaran = Anggaran::where('id_divisi', $request->id_divisi)->first();
-        if ($totalAnggaran) {
-            $totalAnggaran->jumlah += $request->jumlah;
-            $totalAnggaran->save();
-        }
-    } else if ($request->tipe_transaksi === 'Pengeluaran') {
-        // Kurangi jumlah dari total anggaran
-        $totalAnggaran = Anggaran::where('id_divisi', $request->id_divisi)->first();
-        if ($totalAnggaran) {
-            $totalAnggaran->jumlah -= $request->jumlah;
-            $totalAnggaran->save();
-        }
-    }
+    // // Update total anggaran berdasarkan tipe transaksi
+    // if ($request->tipe_transaksi === 'Penerimaan') {
+    //     // Tambah jumlah ke total anggaran
+    //     $totalAnggaran = Anggaran::where('id_divisi', $request->id_divisi)->first();
+    //     if ($totalAnggaran) {
+    //         $totalAnggaran->jumlah += $request->jumlah;
+    //         $totalAnggaran->save();
+    //     }
+    // } else if ($request->tipe_transaksi === 'Pengeluaran') {
+    //     // Kurangi jumlah dari total anggaran
+    //     $totalAnggaran = Anggaran::where('id_divisi', $request->id_divisi)->first();
+    //     if ($totalAnggaran) {
+    //         $totalAnggaran->jumlah -= $request->jumlah;
+    //         $totalAnggaran->save();
+    //     }
+    // }
 
     return redirect()->back()->with('success', 'Pengajuan berhasil dibuat.');
 }

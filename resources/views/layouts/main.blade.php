@@ -23,15 +23,13 @@
             <ul>
                 <li class="mb-4 flex items-center {{ request()->routeIs('home.kadiv') ? 'bg-green-200 text-green-600' : '' }}">
                     <i class="fas fa-home mr-3"></i>
-                    <a href="{{ route('home.kadiv') }}">Halaman Utama</a>
+                    <a href="{{ auth()->user()->role == 'admin' ? route('home.admin') : route('home.kadiv') }}">Halaman Utama</a>
                 </li>
-                @if (request()->routeIs('home.admin')) <!-- Pengecekan rute untuk admin -->
-                <li class="mb-4 flex items-center {{ request()->routeIs('manage.data') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-database mr-5"></i>
-                    <a href="#">Manage Data</a>
-                </li>
-                @endif
-                @if (request()->routeIs('home.admin')) <!-- Pengecekan rute untuk admin -->
+                @if(auth()->user()->role == 'admin') <!-- Pengecekan untuk admin -->
+                    <li class="mb-4 flex items-center {{ request()->routeIs('manage.data') ? 'bg-green-200 text-green-600' : '' }}">
+                        <i class="fas fa-database mr-5"></i>
+                        <a href="{{ route('manage.data') }}">Kelola Rekening</a>
+                    </li>
                     <li class="mb-4 flex items-center {{ request()->routeIs('manage.user') ? 'bg-green-200 text-green-600' : '' }}">
                         <i class="fas fa-users mr-5"></i>
                         <a href="{{ route('manage.user') }}">Kelola User</a>
