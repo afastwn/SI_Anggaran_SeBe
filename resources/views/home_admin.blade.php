@@ -5,11 +5,22 @@
 @section('content')
 <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">HALO, ADMIN!</h1>
-    <div class="flex items-center">
+    <div class="flex items-center relative">
         <input class="border rounded-full px-4 py-2 mr-4" placeholder="Search" type="text"/>
         <i class="fas fa-user-circle text-2xl mr-2"></i>
         <span>ADMIN</span>
-        <i class="fas fa-caret-down ml-2"></i>
+        <i class="fas fa-caret-down ml-2 cursor-pointer" onclick="toggleDropdown()"></i>
+
+        <!-- Dropdown Menu -->
+        <div id="dropdown" class="absolute right-0 mt-2 w-48 bg-white border rounded-lg shadow-lg hidden">
+            <ul>
+                <li>
+                    <a href="{{ route('logout') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -64,4 +75,24 @@
     <h2 class="text-xl font-bold mb-4">Anggaran VS Realisasi</h2>
     <img alt="Pie chart showing budget vs realization" height="400" src="{{ asset('images/pie-chart.png') }}" width="400"/>
 </div>
+
+@endsection
+
+@section('scripts')
+<script>
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdown');
+        dropdown.classList.toggle('hidden');
+    }
+
+    // Close the dropdown if clicked outside of it
+    window.onclick = function(event) {
+        const dropdown = document.getElementById('dropdown');
+        if (!event.target.matches('.fas, .fas *') && !event.target.matches('.fas.fa-caret-down')) {
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        }
+    }
+</script>
 @endsection

@@ -22,43 +22,49 @@
             </div>
             <ul>
                 <li class="mb-4 flex items-center {{ request()->routeIs('home.kadiv') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-home mr-2"></i>
+                    <i class="fas fa-home mr-3"></i>
                     <a href="{{ route('home.kadiv') }}">Halaman Utama</a>
                 </li>
                 @if (request()->routeIs('home.admin')) <!-- Pengecekan rute untuk admin -->
                 <li class="mb-4 flex items-center {{ request()->routeIs('manage.data') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-database mr-2"></i>
+                    <i class="fas fa-database mr-5"></i>
                     <a href="#">Manage Data</a>
                 </li>
                 @endif
                 @if (request()->routeIs('home.admin')) <!-- Pengecekan rute untuk admin -->
                     <li class="mb-4 flex items-center {{ request()->routeIs('manage.user') ? 'bg-green-200 text-green-600' : '' }}">
-                        <i class="fas fa-users mr-2"></i>
+                        <i class="fas fa-users mr-5"></i>
                         <a href="{{ route('manage.user') }}">Kelola User</a>
                     </li>
                 @endif
                 <li class="mb-4 flex items-center {{ request()->routeIs('pengajuan.show') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-file-alt mr-2"></i>
+                    <i class="fas fa-file-alt mr-5"></i>
                     <a href="{{ route('pengajuan.show') }}">Pengajuan</a>
                 </li>
+                @if (Route::has('anggaran'))
+                    <li class="mb-4 flex items-center {{ request()->routeIs('anggaran') ? 'bg-green-200 text-green-600' : '' }}">
+                        <i class="fas fa-file-alt mr-5"></i>
+                        <a href="{{ route('anggaran') }}">Anggaran</a>
+                    </li>
+                @endif
                 <li class="mb-4 flex items-center {{ request()->routeIs('anggaran') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-file-alt mr-2"></i>
-                    <a href="{{ route('anggaran') }}">Anggaran</a>
-                </li>
+                    <i class="fas fa-money-bill-alt mr-3"></i>
+                        <a href="">Anggaran</a>
+                    </li>
                 <li class="mb-4 flex items-center {{ request()->routeIs('realisasi') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-check-circle mr-2"></i>
+                    <i class="fas fa-check-circle mr-4"></i>
                     <a href="#">Realisasi</a>
                 </li>
                 <li class="mb-4 flex items-center {{ request()->routeIs('dokumen.anggaran') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-folder-open mr-2"></i>
+                    <i class="fas fa-folder-open mr-3"></i>
                     <a href="#">Dokumen Anggaran</a>
                 </li>
                 <li class="mb-4 flex items-center {{ request()->routeIs('report') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-file mr-2"></i>
+                    <i class="fas fa-file mr-5"></i>
                     <a href="#">Report</a>
                 </li>
                 <li class="mb-4 flex items-center {{ request()->routeIs('setting') ? 'bg-green-200 text-green-600' : '' }}">
-                    <i class="fas fa-cog mr-2"></i>
+                    <i class="fas fa-cog mr-4"></i>
                     <a href="#">Setting</a>
                 </li>
             </ul>
