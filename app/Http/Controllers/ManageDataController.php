@@ -22,9 +22,11 @@ class ManageDataController extends Controller
     {
         // Validasi data rekening
         $request->validate([
-            'nomor_rek' => 'required|string|max:255',
+            'nomor_rek' => 'required|string|max:255|unique:rekening,nomor_rek', // Validasi unique
             'alokasi_rekening' => 'required|string|max:255',
             'jenis_rek' => 'required|string|max:255',
+        ], [
+            'nomor_rek.unique' => 'Nomor rekening sudah ada. Silakan masukkan nomor rekening yang berbeda.', // Pesan kesalahan khusus
         ]);
 
         // Menyimpan data rekening baru
@@ -35,5 +37,39 @@ class ManageDataController extends Controller
         $rekening->save();
 
         return redirect()->route('manage.data')->with('success', 'Rekening berhasil ditambahkan.');
+    }
+
+    public function editRekening($id)
+    {
+        $rekening = Rekening::findOrFail($id);
+        return view('ManageData/edit', compact('rekening')); // Buat view edit untuk rekening
+    }
+
+    public function destroyRekening($id)
+    {
+        \Log::info("Menghapus rekening dengan ID: " . $id); // Tambahkan log
+        $rekening = Rekening::findOrFail($id);
+        $rekening->delete();
+
+        return redirect()->route('manage.data')->with('success', 'Rekening berhasil dihapus.');
+    }
+
+    public function updateRekening(Request $request, $id)
+    {
+        // Validasi data rekening
+        $request->validate([
+            'nomor_rek' => 'required|string|max:255|unique:rekening,nomor_rek,' . $id, // Validasi unique, kecuali untuk rekening yang sedang diedit
+            'alokasi_rekening' => 'required|string|max:255',
+            'jenis_rek' => 'required|string|max:255',
+        ]);
+
+        // Temukan rekening dan perbarui
+        $rekening = Rekening::findOrFail($id);
+        $rekening->nomor_rek = $request->nomor_rek;
+        $rekening->alokasi_rekening = $request->alokasi_rekening;
+        $rekening->jenis_rek = $request->jenis_rek;
+        $rekening->save();
+
+        return redirect()->route('manage.data')->with('success', 'Rekening berhasil diperbarui.');
     }
 }

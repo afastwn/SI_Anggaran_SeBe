@@ -36,6 +36,9 @@ Route::middleware(['auth', 'Roles:admin'])->group(function () {
     Route::get('/manage/data', [ManageDataController::class, 'index'])->name('manage.data');
     Route::get('/manage/data/rekening/create', [ManageDataController::class, 'createRekening'])->name('manage.data.rekening.create');
     Route::post('/manage/data/rekening/store', [ManageDataController::class, 'storeRekening'])->name('manage.data.rekening.store');
+    Route::get('/manage/data/rekening/edit/{id}', [ManageDataController::class, 'editRekening'])->name('manage.data.rekening.edit');
+    Route::delete('/manage/data/rekening/{id}', [ManageDataController::class, 'destroyRekening'])->name('manage.data.rekening.destroy');
+    Route::put('/manage/data/rekening/update/{id}', [ManageDataController::class, 'updateRekening'])->name('manage.data.rekening.update');
 });
 
 Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Semua pengguna bisa mengakses
