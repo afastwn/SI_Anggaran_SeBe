@@ -31,17 +31,19 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
+
         // Cek kredensial
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             // Jika login berhasil, periksa peran pengguna
-            $user = Auth::user();
+            $user = Auth::userr();
             dd($user);
 
-            if ($user->role == 'admin') {
+            if ($user->role == Userr::ROLE_ADMIN) {
                 return redirect()->intended('home.admin'); // Halaman untuk admin
-            } elseif ($user->role == 'kepala_divisi') {
+            } elseif ($user->role == Userr::ROLE_KADIV) {
                 return redirect()->intended('home.kadiv'); // Halaman untuk kepala divisi
             }
+
         }
 
         // Jika login gagal

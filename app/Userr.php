@@ -10,7 +10,7 @@ class Userr extends Authenticatable
     use Notifiable; // Tambahkan trait Notifiable jika Anda berencana untuk menggunakan notifikasi
 
     public $timestamps = false;
-    
+
     protected $table = 'userr'; // Nama tabel
     protected $primaryKey = 'id_user'; // Kunci primer
     protected $fillable = ['nama_user', 'role', 'email', 'password']; // Tambahkan 'password' jika Anda ingin menyimpan password
@@ -25,7 +25,6 @@ class Userr extends Authenticatable
             self::ROLE_KADIV,
         ];
     }
-    // Jika ada relasi dengan entitas lain, tambahkan di sini
 
     // Jika Anda ingin menggunakan hashing untuk password, Anda dapat menambahkan mutator
     public function setPasswordAttribute($password)
