@@ -41,5 +41,14 @@ Route::middleware(['auth', 'Roles:admin'])->group(function () {
     Route::put('/manage/data/rekening/update/{id}', [ManageDataController::class, 'updateRekening'])->name('manage.data.rekening.update');
 });
 
-Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Semua pengguna bisa mengakses
-Route::post('/manage/user/store', [RegisterController::class, 'register'])->name('manage.user.store'); // Semua pengguna bisa mengakses
+Route::middleware(['auth', 'Roles:admin'])->group(function () {
+    Route::get('/manage/user', [RegisterController::class, 'index'])->name('manage.user'); // Menampilkan daftar pengguna
+    Route::get('/manage/user/create', [RegisterController::class, 'showRegistrationForm'])->name('manage.user.create'); // Menampilkan form pendaftaran pengguna baru
+    Route::get('/manage/user/edit/{id}', [RegisterController::class, 'editUser'])->name('manage.user.edit');
+    Route::delete('/manage/user/{id}', [RegisterController::class, 'destroy'])->name('manage.user.destroy'); // Menghapus pengguna
+    Route::post('/manage/user/store', [RegisterController::class, 'store'])->name('manage.user.store'); // Menyimpan pengguna baru
+    Route::put('/manage/user/{id}', [RegisterController::class, 'update'])->name('manage.user.update'); // Memperbarui pengguna
+});
+
+// Route::get('/manage/user', [RegisterController::class, 'showRegistrationForm'])->name('manage.user'); // Semua pengguna bisa mengakses
+// Route::post('/manage/user/store', [RegisterController::class, 'register'])->name('manage.user.store'); // Semua pengguna bisa mengakses

@@ -14,41 +14,76 @@ class RegisterController extends Controller
 {
     use RegistersUsers;
 
+    public function index()
+    {
+        $users = Userr::all(); // Ambil semua data pengguna
+        return view('KelolaUser/index', compact('users')); // Kirim data pengguna ke view
+    }
+
+    public function destroy($id)
+    {
+        $user = Userr::findOrFail($id);
+        
+        // Hapus pengguna
+        $user->delete();
+
+        return redirect()->route('manage.user')->with('success', 'Pengguna berhasil dihapus.');
+    }
+
     // Menampilkan form pendaftaran
     public function showRegistrationForm()
     {
-        return view('auth.register'); // Pastikan ini adalah nama view yang benar
+        return view('KelolaUser.create'); // Pastikan ini adalah nama view yang benar
+    }
+
+    public function editUser ($id)
+    {
+        $user = Userr::findOrFail($id); // Ambil data pengguna berdasarkan ID
+        return view('KelolaUser/edit', compact('user')); // Kirim data pengguna ke view
     }
 
     // Menyimpan pengguna baru
-    protected function create(array $data)
+    public function store(Request $request)
     {
-        return Userr::create([
-            'nama_user' => $data['nama_user'],
-            'role' => $data['role'], // Simpan role
-            'email' => $data['email'],
-            'password' => $data['password'],
-            // 'password' => Hash::make($data['password']),
+        $request->validate([
+            'nama_user' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:userr',
+            'role' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
         ]);
+
+        Userr::create([
+            'nama_user' => $request->nama_user,
+            'email' => $request->email,
+            'role' => $request->role,
+            'password' => $request->password,
+        ]);
+
+        return redirect()->route('manage.user')->with('success', 'Pengguna berhasil ditambahkan.');
     }
 
-    // Validasi data pendaftaran
-    protected function validator(array $data)
+    public function update(Request $request, $id)
     {
-        return Validator::make($data, [
-            'nama_user' => ['required', 'string', 'max:255'],
-            'role' => ['required', 'in:' . implode(',', Userr::roles())], // Validasi role harus sesuai dengan enum
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:userr'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        $user = Userr::findOrFail($id);
+
+        $request->validate([
+            'nama_user' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:userr,email,' . $id . ',id_user',
+            'role' => 'required|string',
+            'password' => 'nullable|string|min:8|confirmed', // Password bisa kosong
         ]);
-    }
 
-    // Mengoverride metode register
-    public function register(Request $request)
-    {
-        $this->validator($request->all())->validate();
-        $this->create($request->all());
+        $user->nama_user = $request->nama_user;
+        $user->email = $request->email;
+        $user->role = $request->role;
 
-        return redirect()->route('login')->with('success', 'Pengguna berhasil ditambahkan.');
+        // Jika password diisi, update password
+        if ($request->filled('password')) {
+            $user->password = $request->password;
+        }
+
+        $user->save();
+
+        return redirect()->route('manage.user')->with('success', 'Pengguna berhasil diperbarui.');
     }
 }

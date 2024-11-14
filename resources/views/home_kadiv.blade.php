@@ -4,11 +4,11 @@
 
 @section('content')
 <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold">HALO, Kepala Divisi Inventaris!</h1>
+    <h1 class="text-3xl font-bold">HALO, {{ auth()->user()->nama_user }}!</h1>
     <div class="flex items-center relative">
         <input class="border rounded-full px-4 py-2 mr-4" placeholder="Search" type="text"/>
         <i class="fas fa-user-circle text-2xl mr-2"></i>
-        <span>KADIV INV</span>
+        <span>{{ auth()->user()->role == 'kepala_divisi' ? 'KADIV ' . strtoupper(auth()->user()->department) : 'ADMIN' }}</span>
         <i class="fas fa-caret-down ml-2 cursor-pointer" id="dropdown-toggle"></i>
 
         <!-- Dropdown Menu -->

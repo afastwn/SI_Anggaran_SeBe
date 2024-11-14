@@ -49,6 +49,9 @@ class ManageDataController extends Controller
     {
         \Log::info("Menghapus rekening dengan ID: " . $id); // Tambahkan log
         $rekening = Rekening::findOrFail($id);
+        if ($rekening->anggaran()->count() > 0) {
+            return redirect()->route('manage.data')->with('error', 'Rekening tidak dapat dihapus karena sudah berelasi di tabel anggaran.');
+        }
         $rekening->delete();
 
         return redirect()->route('manage.data')->with('success', 'Rekening berhasil dihapus.');
@@ -58,18 +61,18 @@ class ManageDataController extends Controller
     {
         // Validasi data rekening
         $request->validate([
-            'nomor_rek' => 'required|string|max:255|unique:rekening,nomor_rek,' . $id, // Validasi unique, kecuali untuk rekening yang sedang diedit
+            'nomor_rek' => 'required|string|max:255|unique:rekening,nomor_rek,' . $id . ',id_rekening', // Ganti 'id' dengan 'id_rekening'
             'alokasi_rekening' => 'required|string|max:255',
             'jenis_rek' => 'required|string|max:255',
         ]);
-
+    
         // Temukan rekening dan perbarui
         $rekening = Rekening::findOrFail($id);
         $rekening->nomor_rek = $request->nomor_rek;
         $rekening->alokasi_rekening = $request->alokasi_rekening;
         $rekening->jenis_rek = $request->jenis_rek;
         $rekening->save();
-
+    
         return redirect()->route('manage.data')->with('success', 'Rekening berhasil diperbarui.');
     }
 }
