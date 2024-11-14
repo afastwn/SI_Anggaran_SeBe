@@ -12,7 +12,7 @@
 
     <!-- Tampilkan daftar rekening jika ada -->
     <h2 class="text-xl font-semibold mt-6">Daftar Rekening</h2>
-    <table class="table table-striped table-bordered mt-4">
+    <table id="rekeningTable" class="table table-striped table-bordered mt-4">
         <thead>
             <tr>
                 <th>No</th>
@@ -33,4 +33,11 @@
         </tbody>
     </table>
 </div>
+@section('scripts')
+<script>
+    $(document).ready(function() {
+        $('#rekeningTable').DataTable();
+    });
+</script>
+@endsection
 @endsection
